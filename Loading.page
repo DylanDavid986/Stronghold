@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Progreso Animado</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(to right, #ff7e5f, #feb47b);
+      font-family: Arial, sans-serif;
+    }
+    .progress-container {
+      width: 80%;
+      height: 30px;
+      background-color: #ddd;
+      border-radius: 15px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(to right, green, blue);
+      border-radius: 15px;
+      animation: progress 5s linear forwards, fadeOut 2s ease-out 7s forwards;
+    }
+    @keyframes progress {
+      to {
+        width: 100%;
+      }
+    }
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+      }
+    }
+    .loading-message {
+      font-size: 1.2em;
+      color: #333;
+      animation: fadeInOut 1s ease-in-out infinite;
+    }
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+    #message-container {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      border-radius: 15px;
+      background: rgba(0, 0, 255, 0.1); /* Fondo cristalino azul */
+      box-shadow: 0 0 10px rgba(0, 0, 255, 0.5); /* Efecto de sombra */
+      animation: wave 3s infinite;
+    }
+    @keyframes wave {
+      0% { box-shadow: 0 0 10px rgba(0, 255, 0, 0.5); }
+      50% { box-shadow: 0 0 20px rgba(0, 255, 0, 0.5); }
+      100% { box-shadow: 0 0 10px rgba(0, 255, 0, 0.5); }
+    }
+    #message-container img {
+      max-width: 100%;
+      height: auto;
+      filter: blur(5px);
+      margin-bottom: 20px;
+    }
+    #message-container p {
+      font-size: 1.5em;
+      color: #0044cc;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 10px 20px;
+      border-radius: 10px;
+      animation: textPop 1.5s ease-in-out infinite alternate;
+    }
+    @keyframes textPop {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.1); }
+    }
+    #message-container button {
+      padding: 10px 20px;
+      font-size: 1em;
+      color: white;
+      background-color: #0044cc;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    #message-container button:hover {
+      background-color: #002288;
+    }
+  </style>
+</head>
+<body>
+  <div class="progress-container">
+    <div class="progress-bar"></div>
+  </div>
+  <div class="loading-message" id="loading-message">Cargando archivos...</div>
+  <div id="message-container">
+    <img src="instok.png" alt="Imagen centrada">
+    <p>El programa se va a arrancar en auto...</p>
+    <button onclick="closePage()">Listo</button>
+  </div>
+  <script>
+    let messages = ["Cargando bloques...", "Ejecutando...", "Preparando entorno...", "Generando Entorno..."];
+    let messageIndex = 0;
+
+    function updateMessage() {
+      document.getElementById('loading-message').textContent = messages[messageIndex];
+      messageIndex = (messageIndex + 1) % messages.length;
+    }
+
+    setInterval(updateMessage, 1000);
+
+    function closePage() {
+      window.close();
+    }
+
+    setTimeout(() => {
+      document.querySelector('.progress-container').style.display = 'none';
+      document.getElementById('loading-message').style.display = 'none';
+      document.getElementById('message-container').style.display = 'flex';
+    }, 7000);
+  </script>
+</body>
+</html>
